@@ -3,27 +3,48 @@ package com.bosonit.block5properties;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
+//@ConfigurationProperties(prefix = "my")
 public class Variables implements CommandLineRunner {
     @Value("${greeting}")
     private String greeting;
-
     @Value("${my.number}")
-    private int myNumber;
-
+    private int number;
     @Value("${new.property}")
     private String newProperty;
 
-    //agregamos una variable de entorno con el nombre new.property y nos da como salida
-    //el valor de la variable de entorno, ya que no tiene valor en application.properties
-    //(acordarse de reiniciar el IDE para que efectúen los cambios de las variables de entorno)
+    public String getGreeting() {
+        return greeting;
+    }
+
+    public void setGreeting(String greeting) {
+        this.greeting = greeting;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getNewProperty() {
+        return newProperty;
+    }
+
+    public void setNewProperty(String newProperty) {
+        this.newProperty = newProperty;
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(greeting);
-        System.out.println(myNumber);
+        System.out.println(getGreeting());
+        System.out.println(getNumber());
         System.out.println("El valor de new.property es: " +
-                (newProperty.isEmpty() ? "new.property no tiene valor" : newProperty));
+                (newProperty.isEmpty() ? "new.property no tiene valor" : getNewProperty()));
     }
 }
