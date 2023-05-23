@@ -2,7 +2,6 @@ package com.bosonit.block5profiles;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +19,6 @@ public class Block5ProfilesApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		log.info("My bd url: ", appConfig.getUrl());
+		log.info("My app name: {}", appConfig.getUrl());
 	}
 }
