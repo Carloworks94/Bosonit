@@ -22,30 +22,23 @@ public class Controller {
     //a su vez el servicio hace un autowired del repositorio JPA
     @Autowired
     PersonaServiceImpl personaService;
-
     IPersonaMapper mapper = Mappers.getMapper(IPersonaMapper.class);
 
     @PostMapping
-    public ResponseEntity<PersonaOutputDTO> addPersona(@RequestBody PersonaInputDTO persona) {
+    public ResponseEntity<PersonaOutputDTO> addPersona(@RequestBody PersonaInputDTO persona) throws Exception {
         URI location = URI.create("/persona");
         //return new ResponseEntity<>(personaService.addPersona(persona), HttpStatus.CREATED);
         //se puede hacer el return de ambas maneras
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(personaService.addPersona(persona));
-        }catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(personaService.addPersona(persona));
+
         //tambien se puede agregar un location para indicar la direccion donde se ha creado el objeto Persona
         //return ResponseEntity.created(location).body(personaService.addPersona(persona));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<PersonaOutputDTO> getPersona(@PathVariable int id) {
-        try {
-            return ResponseEntity.ok(personaService.getPersona(id));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<PersonaOutputDTO> getPersona(@PathVariable int id) throws Exception {
+        return ResponseEntity.ok(personaService.getPersona(id));
+
     }
 
     @GetMapping
@@ -58,6 +51,7 @@ public class Controller {
     public ResponseEntity<List<PersonaOutputDTO>> getPersona(@PathVariable String user) { //FIXME: pasar personas a OutputDTO --> Una forma sería con el mapper, y otra directamente utilizando la conversion de flujo de datos .stream()
         List<PersonaOutputDTO> listaPO = new ArrayList<>();
         List<Persona> listaP = personaService.getPersonas(user);
+        //List<PersonaOutputDTO> listaP = personaService.getPersonas(user).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList(); //Esto debería hacer lo mismo que el mapper
         for (Persona p : listaP){
             listaPO.add(mapper.personaToPersonaOutputDTO(p));  //FIXME: pasar este for a un metodo del mapper que te devuelva una lista de PersonaOutputDTO
         }

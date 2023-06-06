@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
+
 @NoArgsConstructor
 public class PersonaInputDTO {
     int id;
@@ -23,6 +23,22 @@ public class PersonaInputDTO {
     Date createdDate;
     String imagenUrl;
     Date terminationDate;
+
+    public PersonaInputDTO(int id, String user, String password, String name, String surname, String companyEmail,
+                           String personalEmail, String city, Boolean active, Date createdDate, String imagenUrl, Date terminationDate) {
+        this.id = id;
+        this.user = user;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.companyEmail = companyEmail;
+        this.personalEmail = personalEmail;
+        this.city = city;
+        this.active = active;
+        this.createdDate = createdDate;
+        this.imagenUrl = imagenUrl;
+        this.terminationDate = terminationDate;
+    }
 
     public Persona personaInputDTOtoPersona(Persona persona) {
         if (this.user != null) {

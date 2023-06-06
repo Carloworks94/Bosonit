@@ -4,6 +4,8 @@ package com.bosonit.block7crudvalidation.persona.application;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
+import com.bosonit.block7crudvalidation.persona.exceptions.EntityNotFoundException;
+import com.bosonit.block7crudvalidation.persona.exceptions.UnprocessableEntityException;
 import com.bosonit.block7crudvalidation.persona.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,32 +21,32 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public PersonaOutputDTO addPersona(PersonaInputDTO personaInputDTO) throws Exception {
         if (personaInputDTO.getUser() == null)
-            throw new Exception("Usuario no puede ser nulo");
+            throw new UnprocessableEntityException("Usuario no puede ser nulo");
         if (personaInputDTO.getUser().length()>10)
-            throw new Exception("Longitud de usuario no puede ser mayor a 10 caracteres");
+            throw new UnprocessableEntityException("Longitud de usuario no puede ser mayor a 10 caracteres");
         if (personaInputDTO.getUser().length()<6)
-            throw new Exception("Longitud de usuario no puede ser menor a 6 caracteres");
+            throw new UnprocessableEntityException("Longitud de usuario no puede ser menor a 6 caracteres");
         if (personaInputDTO.getPassword() == null)
-            throw new Exception("Password no puede ser nulo");
+            throw new UnprocessableEntityException("Password no puede ser nulo");
         if (personaInputDTO.getName() == null)
-            throw new Exception("Nombre no puede ser nulo");
+            throw new UnprocessableEntityException("Nombre no puede ser nulo");
         if (personaInputDTO.getCompanyEmail() == null)
-            throw new Exception("El email de la empresa no puede ser nulo");
+            throw new UnprocessableEntityException("El email de la empresa no puede ser nulo");
         if (personaInputDTO.getPersonalEmail() == null)
-            throw new Exception("El email personal no puede ser nulo");
+            throw new UnprocessableEntityException("El email personal no puede ser nulo");
         if (personaInputDTO.getCity() == null)
-            throw new Exception("La ciudad no puede ser nulo");
+            throw new UnprocessableEntityException("La ciudad no puede ser nulo");
         if (personaInputDTO.getActive() == null)
-            throw new Exception("La actividad no puede ser nulo");
+            throw new UnprocessableEntityException("La actividad no puede ser nulo");
         if (personaInputDTO.getCreatedDate() == null)
-            throw new Exception("La fecha de creacion no puede ser nulo");
+            throw new UnprocessableEntityException("La fecha de creacion no puede ser nulo");
 
         return personaRepository.save(new Persona(personaInputDTO)).personaToPersonaOutputDTO();
     }
 
     @Override
     public PersonaOutputDTO getPersona(int id) throws Exception {
-        return personaRepository.findById(id).orElseThrow(() -> new Exception("404 - Persona no encontrada")).personaToPersonaOutputDTO();
+        return personaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Persona no encontrada")).personaToPersonaOutputDTO();
     }
 
     @Override
