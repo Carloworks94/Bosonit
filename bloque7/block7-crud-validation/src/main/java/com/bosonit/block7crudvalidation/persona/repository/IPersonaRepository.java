@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PersonaRepository extends JpaRepository<Persona, Integer> {
+public interface IPersonaRepository extends JpaRepository<Persona, Integer> {
     List<Persona> findAllByUserPersona(String user);
     @Query(value = "SELECT COUNT(*) FROM Persona")
     int getTotal();

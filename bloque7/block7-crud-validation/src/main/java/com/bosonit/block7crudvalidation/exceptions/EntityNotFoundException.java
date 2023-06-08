@@ -1,4 +1,4 @@
-package com.bosonit.block7crudvalidation.persona.exceptions;
+package com.bosonit.block7crudvalidation.exceptions;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

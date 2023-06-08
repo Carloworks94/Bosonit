@@ -5,7 +5,6 @@ import com.bosonit.block7crudvalidation.persona.application.PersonaServiceImpl;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.mapper.IPersonaMapper;
-import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/persona")
-public class Controller {
+public class PersonaController {
     //a su vez el servicio hace un autowired del repositorio JPA
     @Autowired
     PersonaServiceImpl personaService;
@@ -41,6 +39,7 @@ public class Controller {
 
     }
 
+
     @GetMapping
     public ResponseEntity<List<PersonaOutputDTO>> getAllPersonas() {
         return new ResponseEntity<>(personaService.getAllPersonas(), HttpStatus.OK);
@@ -49,13 +48,14 @@ public class Controller {
     //Método que devuelve la lista con todas las personas que coinciden con el nombre pasado como parámetro
     @GetMapping("/user/{user}")
     public ResponseEntity<List<PersonaOutputDTO>> getPersona(@PathVariable String user) { //FIXME: pasar personas a OutputDTO --> Una forma sería con el mapper, y otra directamente utilizando la conversion de flujo de datos .stream()
-        List<PersonaOutputDTO> listaPO = new ArrayList<>();
-        List<Persona> listaP = personaService.getPersonas(user);
-        //List<PersonaOutputDTO> listaP = personaService.getPersonas(user).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList(); //Esto debería hacer lo mismo que el mapper
-        for (Persona p : listaP){
-            listaPO.add(mapper.personaToPersonaOutputDTO(p));  //FIXME: pasar este for a un metodo del mapper que te devuelva una lista de PersonaOutputDTO
-        }
-        return new ResponseEntity<>(listaPO, HttpStatus.OK);
+//        List<PersonaOutputDTO> listaPO = new ArrayList<>();
+//        List<Persona> listaP = personaService.getPersonas(user);
+//        for (Persona p : listaP){
+//            listaPO.add(mapper.personaToPersonaOutputDTO(p));  //FIXME: pasar este for a un metodo del mapper que te devuelva una lista de PersonaOutputDTO
+//        }
+        //Esto hace lo mismo que con el mapper comentado arriba
+        List<PersonaOutputDTO> listaP1 = personaService.getPersonas(user).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
+        return new ResponseEntity<>(listaP1, HttpStatus.OK);
     }
 
 //    @GetMapping("/pages")
