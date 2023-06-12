@@ -1,5 +1,7 @@
 package com.bosonit.block7crudvalidation.estudios.domain;
 
+import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosInputDTO;
+import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosOutputDTO;
 import com.bosonit.block7crudvalidation.student.domain.Student;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +19,7 @@ import java.util.Set;
 public class Estudios {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Integer id_study;
+    Integer idStudy;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "profesor_id")
 //    Profesor profesor;
@@ -27,8 +29,19 @@ public class Estudios {
     String asignatura;
     @Column(name = "comentarios")
     String comment;
-    @Column(name = "initial_date")
-    Date initial_date;
-    @Column(name = "finish_date")
-    Date finish_date;
+    @Column(name = "initialDate")
+    Date initialDate;
+    @Column(name = "finishDate")
+    Date finishDate;
+
+    public Estudios (EstudiosInputDTO estudiosInputDTO){
+        this.asignatura = estudiosInputDTO.getAsignatura();
+        this.comment = estudiosInputDTO.getComment();
+        this.initialDate = estudiosInputDTO.getInitialDate();
+        this.finishDate = estudiosInputDTO.getFinishDate();
+    }
+
+    public EstudiosOutputDTO estudiosToEstudiosOutputDTO (){
+        return new EstudiosOutputDTO(this.idStudy,this.student,this.asignatura,this.comment,this.initialDate,this.finishDate);
+    }
 }

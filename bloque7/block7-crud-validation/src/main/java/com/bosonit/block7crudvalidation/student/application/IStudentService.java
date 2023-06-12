@@ -16,7 +16,7 @@ public interface IStudentService {
     StudentSimpleOutputDTO getSimpleStudent (int id) throws Exception;
     List<StudentOutputDTO> getAllStudents();
 
-    StudentOutputDTO updateStudent (int id) throws Exception;
+    StudentOutputDTO updateStudent (int id, StudentInputDTO studentInputDTO) throws Exception;
 
     StudentOutputDTO deleteStudent (int id) throws Exception;
 }

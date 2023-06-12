@@ -1,6 +1,8 @@
 package com.bosonit.block7crudvalidation.profesor.domain;
 
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
+import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorInputDTO;
+import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +16,10 @@ import lombok.NoArgsConstructor;
 public class Profesor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    int id_profesor; //FIXME: hacerlo incremental con String
+    int idProfesor; //FIXME: hacerlo incremental con String
 
     @OneToOne
-    @JoinColumn(name = "id_persona")
+    @JoinColumn(name = "idPersona")
     Persona persona;
 
     @Column(name = "comentarios")
@@ -25,5 +27,14 @@ public class Profesor {
 
     @Column(name = "rama")
     String branch;
+
+    public Profesor (ProfesorInputDTO profesorInputDTO){
+        this.coments = profesorInputDTO.getComents();
+        this.branch = profesorInputDTO.getBranch();
+    }
+
+    public ProfesorOutputDTO profesorToProfesorOutputDTO (){
+        return new ProfesorOutputDTO(this.idProfesor, this.persona, this.coments, this.branch);
+    }
 
 }

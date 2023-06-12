@@ -18,8 +18,7 @@ public interface PersonaService {
     List<PersonaOutputDTO> getAllPersonas();
 
     //UPDATE
-    PersonaOutputDTO updatePersona (PersonaInputDTO personaInputDTO) throws Exception;
-    public PersonaOutputDTO updatePersona(int id);
+    PersonaOutputDTO updatePersona (int id, PersonaInputDTO personaInputDTO) throws Exception;
 
     //DELETE
     PersonaOutputDTO deletePersona (int id) throws Exception;

@@ -36,7 +36,6 @@ public class Student {
     List<Estudios> estudios;
 
     public Student (StudentInputDTO studentInputDTO){
-        this.id_student = studentInputDTO.getId_student();
         this.num_hours_week = studentInputDTO.getNum_hours_week();
         this.coments = studentInputDTO.getComents();
         this.branch = studentInputDTO.getBranch();

@@ -65,11 +65,11 @@ public class PersonaController {
 //    }
 
 
-    @PutMapping()
-    public ResponseEntity<?> updatePersona(@RequestBody PersonaInputDTO personaInputDTO) {
+    @PutMapping("{id}")
+    public ResponseEntity<?> updatePersona(@PathVariable int id, @RequestBody PersonaInputDTO personaInputDTO) {
         try {
             //comprobamos que la persona esté creada en el metodo update del servicio, si no lanza excepcion
-            return ResponseEntity.ok().body(personaService.updatePersona(personaInputDTO));
+            return ResponseEntity.ok().body(personaService.updatePersona(id, personaInputDTO));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

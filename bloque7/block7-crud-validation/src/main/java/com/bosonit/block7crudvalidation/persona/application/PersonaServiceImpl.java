@@ -52,7 +52,7 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public List<Persona> getPersonas(String user) {
         //aqui podriamos utilizar por ejemplo stream() para transformar el flujo de datos objetos tipo PersonaOutputDTO y así no usar un mapper en el controlador. Ej:
-        //IPersonaRepository.findAllByNombre(nombre).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
+        //IEstudiosRepository.findAllByNombre(nombre).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
         return IPersonaRepository.findAllByUserPersona(user);
     }
 
@@ -60,7 +60,7 @@ public class PersonaServiceImpl implements PersonaService {
     public Iterable<PersonaOutputDTO> getPersonas(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize); //si ponemos por ejemplo la pag 0, y el numero max de elementos de la base de datos, nos mostraría todos los elementos
 //        List<PersonaOutputDTO> list;
-//        List<Persona> content = IPersonaRepository.findAll(pageRequest).getContent();
+//        List<Persona> content = IEstudiosRepository.findAll(pageRequest).getContent();
 //        List<PersonaOutputDTO> result = new ArrayList<>();
 //        for (Persona persona : content) {
 //            PersonaOutputDTO personaToPersonaOutputDTO = persona.personaToPersonaOutputDTO();
@@ -69,7 +69,7 @@ public class PersonaServiceImpl implements PersonaService {
 //        list = result;
 //        return list;
         //este codigo es lo mismo que lo comentado arriba
-        Iterable<PersonaOutputDTO> iterador = IPersonaRepository.findAll(pageRequest)
+        Iterable<PersonaOutputDTO> iterador = IEstudiosRepository.findAll(pageRequest)
                 .stream()
                 .map(persona -> persona.personaToPersonaOutputDTO())
                 .toList();
@@ -81,19 +81,14 @@ public class PersonaServiceImpl implements PersonaService {
         return IPersonaRepository.findAll().stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
     }
 
-    @Override
-    public PersonaOutputDTO updatePersona(PersonaInputDTO personaInputDTO) throws Exception { //FIXME: aquí no se comprueban las validaciones
-        Persona persona = IPersonaRepository.findById(personaInputDTO.getId()).orElseThrow(() -> new Exception("404 - Persona no encontrada"));
+    @Override //FIXME: aquí no se comprueban las validaciones
+    public PersonaOutputDTO updatePersona(int id, PersonaInputDTO personaInputDTO) throws Exception {
+        Persona persona = IPersonaRepository.findById(id).orElseThrow(() -> new Exception("404 - Persona no encontrada"));
+
         persona = personaInputDTO.personaInputDTOtoPersona(persona);
         return IPersonaRepository.save(persona).personaToPersonaOutputDTO();
     }
 
-    @Override
-    public PersonaOutputDTO updatePersona(int id) {
-        IPersonaRepository.findById(id).orElseThrow();
-        return IPersonaRepository.save(IPersonaRepository.findById(id).get())
-                .personaToPersonaOutputDTO();
-    }
 
     @Override
     public PersonaOutputDTO deletePersona(int id) throws Exception {

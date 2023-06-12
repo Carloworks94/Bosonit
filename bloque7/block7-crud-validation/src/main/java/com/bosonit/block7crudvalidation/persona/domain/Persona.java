@@ -43,7 +43,6 @@ public class Persona {
     Date terminationDate;
 
     public Persona (PersonaInputDTO personaInputDTO){
-        this.id = personaInputDTO.getId();
         this.userPersona = personaInputDTO.getUser();
         this.password = personaInputDTO.getPassword();
         this.name = personaInputDTO.getName();

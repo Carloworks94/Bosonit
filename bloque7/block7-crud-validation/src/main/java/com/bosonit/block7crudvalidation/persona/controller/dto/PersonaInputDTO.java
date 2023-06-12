@@ -11,7 +11,6 @@ import java.util.Date;
 
 @NoArgsConstructor
 public class PersonaInputDTO {
-    int id;
     String user;
     String password;
     String name;
@@ -26,7 +25,6 @@ public class PersonaInputDTO {
 
     public PersonaInputDTO(int id, String user, String password, String name, String surname, String companyEmail,
                            String personalEmail, String city, Boolean active, Date createdDate, String imagenUrl, Date terminationDate) {
-        this.id = id;
         this.user = user;
         this.password = password;
         this.name = name;

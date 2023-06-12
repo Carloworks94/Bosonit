@@ -5,19 +5,24 @@ import com.bosonit.block7crudvalidation.student.controller.dto.StudentInputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentOutputDTO;
 import com.bosonit.block7crudvalidation.student.domain.Student;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@Validated
 @RequestMapping("/student")
 public class StudentController {
     @Autowired
     StudentServiceImpl studentService;
 
     @PostMapping
-    public ResponseEntity<StudentOutputDTO> addStudent (@RequestBody StudentInputDTO studentInputDTO){
+    public ResponseEntity<StudentOutputDTO> addStudent (@RequestBody @Valid StudentInputDTO studentInputDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(studentService.addStudent(studentInputDTO));
     }
 
@@ -31,5 +36,19 @@ public class StudentController {
             return new ResponseEntity<>("Valor de parametro incorrecto", HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping
+    public ResponseEntity<List<StudentOutputDTO>> getAllStudents (){
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudents());
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<StudentOutputDTO> updateStudent (@PathVariable int id, @RequestBody StudentInputDTO studentInputDTO) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.updateStudent(id, studentInputDTO));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<StudentOutputDTO> deleteStudent (@PathVariable int id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.deleteStudent(id));
+    }
 
 }
