@@ -9,13 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfesorInputDTO {
-    Integer idProfesor;
     Integer idPersona;
     String coments;
     String branch;
 
     public Profesor profesorInputDTOtoProfesor(Profesor profesor){
-        profesor.setIdProfesor(this.idProfesor);
         profesor.setComents(this.coments);
         profesor.setBranch(this.branch);
         return profesor;

@@ -13,8 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EstudiosInputDTO {
-    //Integer idProfesor;
-    Integer idStudent;
+    Integer idProfesor;
     String asignatura;
     String comment;
     Date initialDate;

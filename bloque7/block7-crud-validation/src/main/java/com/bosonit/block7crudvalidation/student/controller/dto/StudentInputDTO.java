@@ -18,7 +18,7 @@ public class StudentInputDTO {
     Integer num_hours_week;
     @Size(min = 3, message = "Tamanio minimo de coments 3 letras")
     String coments;
-    //Integer id_profesor;
+    Integer id_profesor;
     String branch;
     List<Estudios> estudios;
 

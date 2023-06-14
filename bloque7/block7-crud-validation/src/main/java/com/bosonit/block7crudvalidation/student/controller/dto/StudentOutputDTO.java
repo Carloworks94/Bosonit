@@ -2,6 +2,7 @@ package com.bosonit.block7crudvalidation.student.controller.dto;
 
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
+import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class StudentOutputDTO {
     Persona persona;
     Integer num_hours_week;
     String coments;
-//    Profesor profesor;
+    Profesor profesor;
     String branch;
     List<Estudios> estudios;
 

@@ -2,6 +2,7 @@ package com.bosonit.block7crudvalidation.persona.domain;
 
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -41,6 +42,7 @@ public class Persona {
     String imagenUrl;
 
     Date terminationDate;
+
 
     public Persona (PersonaInputDTO personaInputDTO){
         this.userPersona = personaInputDTO.getUser();

@@ -1,9 +1,13 @@
 package com.bosonit.block7crudvalidation.student.application;
 
+import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosInputDTO;
+import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
+import com.bosonit.block7crudvalidation.estudios.repository.IEstudiosRepository;
 import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
+import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentInputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentOutputDTO;
@@ -23,11 +27,16 @@ public class StudentServiceImpl implements IStudentService{
     IPersonaRepository personaRepository;
     @Autowired
     IProfesorRepository profesorRepository;
+    @Autowired
+    IEstudiosRepository estudiosRepository;
 
     @Override
     public StudentOutputDTO addStudent(StudentInputDTO studentInputDTO){
         Persona persona = personaRepository.findById(studentInputDTO.getId_persona()).orElseThrow(
                 () -> new EntityNotFoundException("404 - La persona no existe")
+        );
+        Profesor profesor = profesorRepository.findById(studentInputDTO.getId_profesor()).orElseThrow(
+                () -> new EntityNotFoundException("404 - El profesor no existe")
         );
         //comprobamos que el id de la persona que nos pasan no esté asignada a otro estudiante o profesor, ya que es una relacion OneToOne
         if (studentRepository.findByPersona(persona) != null || profesorRepository.findByPersona(persona)!= null){ //FIXME: habrá que comprobar que no sea un profesor en el repositorio de profesor, ya que una persona solo puede ser estudiante o profesor
@@ -35,9 +44,24 @@ public class StudentServiceImpl implements IStudentService{
         }
         Student student = new Student(studentInputDTO);
         student.setPersona(persona);
+        student.setProfesor(profesor);
         return studentRepository.save(student).studentToStudentOutputDTO();
     }
 
+    @Override
+    public StudentOutputDTO addEstudiosToStudent (int idStudent, List<Integer> lEstudiosId){
+        Student student = studentRepository.findById(idStudent).orElseThrow(
+                () -> new EntityNotFoundException("404 - No existe el estudiante")
+        );
+        for (Integer id : lEstudiosId){
+            Estudios estudios = estudiosRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("404 - Estudios no encontrados")
+            );
+            student.getEstudios().add(estudios);
+        }
+
+        return studentRepository.save(student).studentToStudentOutputDTO();
+    }
 
     @Override
     public StudentOutputDTO getStudent (int id) throws Exception {

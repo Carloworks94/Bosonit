@@ -9,6 +9,7 @@ import java.util.List;
 public interface IStudentService {
     StudentOutputDTO addStudent(StudentInputDTO studentInputDTO);
 
+    StudentOutputDTO addEstudiosToStudent (int idEstudios, List<Integer> lEstudiosId);
     //StudentOutputDTO addPersonaToStudent(Persona persona) throws Exception;
 
     StudentOutputDTO getStudent (int id) throws Exception;

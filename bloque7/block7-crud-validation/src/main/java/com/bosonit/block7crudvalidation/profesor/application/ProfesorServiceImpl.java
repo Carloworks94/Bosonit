@@ -1,6 +1,7 @@
 package com.bosonit.block7crudvalidation.profesor.application;
 
 import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
+import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorInputDTO;
@@ -53,12 +54,22 @@ public class ProfesorServiceImpl implements IProfesorService{
 
     @Override
     public ProfesorOutputDTO updateProfesor (int id, ProfesorInputDTO profesorInputDTO){
-        profesorRepository.findById(id).orElseThrow(
+        Profesor profesorAux = profesorRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("404 - El profesor con ese id no existe")
         );
 
+        Persona persona = personaRepository.findById(profesorInputDTO.getIdPersona()).orElseThrow(
+                () -> new EntityNotFoundException("404 - La persona no existe")
+        );
+
+        if ((profesorRepository.findByPersona(persona) != null || studentRepository.findByPersona(persona) != null)
+        && profesorAux.getPersona().getId()!=profesorInputDTO.getIdPersona()){
+            throw new IllegalArgumentException("400 - La persona ya está asignada a otro estudiante/profesor");
+        }
+
         Profesor profesor = new Profesor(profesorInputDTO);
         profesor.setIdProfesor(id);
+        profesor.setPersona(persona);
         return profesorRepository.save(profesor).profesorToProfesorOutputDTO();
     }
 

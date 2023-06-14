@@ -1,12 +1,15 @@
 package com.bosonit.block7crudvalidation.persona.application;
 
 
+import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.exceptions.UnprocessableEntityException;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
+import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
+import com.bosonit.block7crudvalidation.student.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,10 @@ import java.util.List;
 public class PersonaServiceImpl implements PersonaService {
     @Autowired
     IPersonaRepository IPersonaRepository;
+    @Autowired
+    IProfesorRepository profesorRepository;
+    @Autowired
+    IStudentRepository studentRepository;
 
     @Override
     public PersonaOutputDTO addPersona(PersonaInputDTO personaInputDTO) throws Exception {
@@ -93,6 +100,8 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public PersonaOutputDTO deletePersona(int id) throws Exception {
         Persona persona = IPersonaRepository.findById(id).orElseThrow(() -> new Exception("404 - Persona no encontrada"));
+        if (profesorRepository.findByPersona(persona) != null || studentRepository.findByPersona(persona) != null)
+            throw new IllegalArgumentException("400 - La persona es un estudiante o profesor");
         IPersonaRepository.deleteById(id);
         return persona.personaToPersonaOutputDTO();
     }

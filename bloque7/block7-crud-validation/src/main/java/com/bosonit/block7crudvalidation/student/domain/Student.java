@@ -2,6 +2,7 @@ package com.bosonit.block7crudvalidation.student.domain;
 
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
+import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentInputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentOutputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentSimpleOutputDTO;
@@ -27,12 +28,15 @@ public class Student {
     Integer num_hours_week;
     @Column(name = "comentarios")
     String coments;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_profesor")
-//    Profesor profesor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_profesor")
+    Profesor profesor;
     @Column(name = "rama")
     String branch;
-    @OneToMany (mappedBy = "student")
+    @ManyToMany
+    @JoinTable(name = "student_estudios",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "study_id"))
     List<Estudios> estudios;
 
     public Student (StudentInputDTO studentInputDTO){
@@ -43,11 +47,13 @@ public class Student {
     }
 
     public StudentOutputDTO studentToStudentOutputDTO (){
-        return new StudentOutputDTO(this.id_student, this.persona, this.num_hours_week, this.coments, this.branch, this.estudios);
+        return new StudentOutputDTO(this.id_student, this.persona, this.num_hours_week, this.coments, this.profesor,
+                this.branch, this.estudios);
     }
 
     public StudentSimpleOutputDTO studentToStudentSimpleOutputDTO (){
-        return new StudentSimpleOutputDTO(this.id_student, this.num_hours_week, this.coments, this.branch, this.estudios);
+        return new StudentSimpleOutputDTO(this.id_student, this.num_hours_week, this.coments, this.profesor,
+                this.branch, this.estudios);
     }
 
 }
