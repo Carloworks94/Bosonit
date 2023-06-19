@@ -1,11 +1,10 @@
 package com.bosonit.block7crudvalidation.student.application;
 
-import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosInputDTO;
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
 import com.bosonit.block7crudvalidation.estudios.repository.IEstudiosRepository;
+import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
-import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
 import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
@@ -16,11 +15,15 @@ import com.bosonit.block7crudvalidation.student.domain.Student;
 import com.bosonit.block7crudvalidation.student.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class StudentServiceImpl implements IStudentService{
+@Transactional
+@EnableTransactionManagement
+public class StudentServiceImpl implements IStudentService {
     @Autowired
     IStudentRepository studentRepository;
     @Autowired
@@ -31,7 +34,7 @@ public class StudentServiceImpl implements IStudentService{
     IEstudiosRepository estudiosRepository;
 
     @Override
-    public StudentOutputDTO addStudent(StudentInputDTO studentInputDTO){
+    public StudentOutputDTO addStudent(StudentInputDTO studentInputDTO) {
         Persona persona = personaRepository.findById(studentInputDTO.getId_persona()).orElseThrow(
                 () -> new EntityNotFoundException("404 - La persona no existe")
         );
@@ -39,8 +42,8 @@ public class StudentServiceImpl implements IStudentService{
                 () -> new EntityNotFoundException("404 - El profesor no existe")
         );
         //comprobamos que el id de la persona que nos pasan no esté asignada a otro estudiante o profesor, ya que es una relacion OneToOne
-        if (studentRepository.findByPersona(persona) != null || profesorRepository.findByPersona(persona)!= null){ //FIXME: habrá que comprobar que no sea un profesor en el repositorio de profesor, ya que una persona solo puede ser estudiante o profesor
-            throw new IllegalArgumentException("400 - La persona ya está asignada a otro estudiante");
+        if (studentRepository.findByPersona(persona) != null || profesorRepository.findByPersona(persona) != null) { //FIXME: habrá que comprobar que no sea un profesor en el repositorio de profesor, ya que una persona solo puede ser estudiante o profesor
+            throw new IllegalArgumentException("400 - La persona ya está asignada a otro estudiante/profesor");
         }
         Student student = new Student(studentInputDTO);
         student.setPersona(persona);
@@ -48,55 +51,97 @@ public class StudentServiceImpl implements IStudentService{
         return studentRepository.save(student).studentToStudentOutputDTO();
     }
 
+    @Transactional
     @Override
-    public StudentOutputDTO addEstudiosToStudent (int idStudent, List<Integer> lEstudiosId){
+    public StudentOutputDTO addEstudiosToStudent(int idStudent, List<Integer> lEstudiosId) {
         Student student = studentRepository.findById(idStudent).orElseThrow(
                 () -> new EntityNotFoundException("404 - No existe el estudiante")
         );
-        for (Integer id : lEstudiosId){
+
+        for (Integer id : lEstudiosId) {
             Estudios estudios = estudiosRepository.findById(id).orElseThrow(
                     () -> new EntityNotFoundException("404 - Estudios no encontrados")
             );
-            student.getEstudios().add(estudios);
+            if (!student.getEstudios().contains(estudios)) {
+                estudios.getStudents().add(student);
+                student.getEstudios().add(estudios);
+            }
+        }
+
+        return studentRepository.save(student).studentToStudentOutputDTO();
+    }
+
+    @Transactional
+    @Override
+    public StudentOutputDTO getStudent(int id) throws Exception {
+        return studentRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException("404 - El estudiante no existe"))
+                .studentToStudentOutputDTO();
+    }
+
+    @Transactional
+    @Override
+    public StudentSimpleOutputDTO getSimpleStudent(int id) {
+        Student student = studentRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("404 - El estudiante no existe"));
+        //System.out.println(student.getProfesor());
+//        Hibernate.initialize(student);
+//        StudentSimpleOutputDTO studentSimpleOutputDTO = IStudentMapper.INSTANCE.studentToStudentSimpleOutputDTO(student);
+
+        StudentSimpleOutputDTO studentSimpleOutputDTO = student.studentToStudentSimpleOutputDTO();
+        //studentSimpleOutputDTO.setProfesor(studentRepository.findProfesorByStudentId(student.getId_student()));
+        return studentSimpleOutputDTO;
+    }
+
+    @Override
+    public List<StudentOutputDTO> getAllStudents() {
+        return studentRepository.findAll().stream().map(student -> student.studentToStudentOutputDTO()).toList();
+    }
+
+
+    @Override
+    //FIXME: hay redundancia de datos, ya que suponemos que en el input siempre nos van a pasar el id, pero lo lógico es que no sea así
+    public StudentOutputDTO updateStudent(int id, StudentInputDTO studentInputDTO) {
+        Student studentAux = studentRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("404 - El estudiante no existe")
+        );
+        Persona persona = personaRepository.findById(studentInputDTO.getId_persona()).orElseThrow(
+                () -> new EntityNotFoundException("404 - La persona no existe")
+        );
+        Profesor profesor = profesorRepository.findById(studentInputDTO.getId_profesor()).orElseThrow(
+                () -> new EntityNotFoundException("404 - El profesor no existe")
+        );
+        if ((profesorRepository.findByPersona(persona) != null || studentRepository.findByPersona(persona) != null)
+                && studentAux.getPersona().getId() != studentInputDTO.getId_persona()) {
+            throw new IllegalArgumentException("400 - La persona ya está asignada a otro estudiante/profesor");
+        }
+        Student student = new Student(studentInputDTO);
+        student.setId_student(id);
+        student.setPersona(persona);
+        student.setProfesor(profesor);
+        return studentRepository.save(student).studentToStudentOutputDTO();
+    }
+
+    @Override
+    public StudentOutputDTO deleteEstudiosToStudent(int idStudent, List<Integer> lEstudiosId) {
+        Student student = studentRepository.findById(idStudent).orElseThrow(
+                () -> new EntityNotFoundException("404 - No existe el estudiante")
+        );
+        for (Integer id : lEstudiosId) {
+            Estudios estudios = estudiosRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("404 - Estudios no encontrados")
+            );
+            if(student.getEstudios().contains(estudios))
+                student.getEstudios().remove(estudios);
         }
 
         return studentRepository.save(student).studentToStudentOutputDTO();
     }
 
     @Override
-    public StudentOutputDTO getStudent (int id) throws Exception {
-        return studentRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("404 - El estudiante no existe"))
-                .studentToStudentOutputDTO();
-    }
-
-    @Override
-    public StudentSimpleOutputDTO getSimpleStudent (int id) throws Exception {
-        return studentRepository.findById(id).orElseThrow(
-                        ()-> new EntityNotFoundException("404 - El estudiante no existe"))
-                .studentToStudentSimpleOutputDTO();
-    }
-    @Override
-    public List<StudentOutputDTO> getAllStudents(){
-        return studentRepository.findAll().stream().map(student -> student.studentToStudentOutputDTO()).toList();
-    }
-
-
-    @Override //FIXME: hay redundancia de datos, ya que suponemos que en el input siempre nos van a pasar el id, pero lo lógico es que no sea así
-    public StudentOutputDTO updateStudent (int id, StudentInputDTO studentInputDTO) throws Exception {
-        studentRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("404 - El estudiante no existe")
-        );
-
-        Student student = new Student(studentInputDTO);
-        student.setId_student(id);
-        return studentRepository.save(student).studentToStudentOutputDTO();
-    }
-
-    @Override
-    public StudentOutputDTO deleteStudent (int id) throws Exception {
+    public StudentOutputDTO deleteStudent(int id) throws Exception {
         Student student = studentRepository.findById(id).orElseThrow(
-                ()-> new Exception("404 - El estudiante no existe")
+                () -> new Exception("404 - El estudiante no existe")
         );
         studentRepository.deleteById(id);
         return student.studentToStudentOutputDTO();

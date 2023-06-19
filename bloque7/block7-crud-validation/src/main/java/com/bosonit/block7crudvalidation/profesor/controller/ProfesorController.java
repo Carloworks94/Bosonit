@@ -3,6 +3,8 @@ package com.bosonit.block7crudvalidation.profesor.controller;
 import com.bosonit.block7crudvalidation.profesor.application.ProfesorServiceImpl;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorInputDTO;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
+import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorSimpleOutputDTO;
+import com.bosonit.block7crudvalidation.student.controller.dto.StudentSimpleOutputDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,15 @@ public class ProfesorController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProfesorOutputDTO> getProfesor (@PathVariable int id){
-        return ResponseEntity.status(HttpStatus.OK).body(profesorService.getProfesor(id));
+    public ResponseEntity<?> getProfesor (@PathVariable int id,
+                                                          @RequestParam(defaultValue = "simple") String outputType){
+        if (outputType.equals("simple")) {
+            ProfesorSimpleOutputDTO p  = profesorService.getSimpleProfesor(id);
+            return ResponseEntity.status(HttpStatus.OK).body(p);
+        }else if (outputType.equals("full"))
+            return ResponseEntity.status(HttpStatus.OK).body(profesorService.getProfesor(id));
+        else
+            return new ResponseEntity<>("Valor de parametro incorrecto", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping

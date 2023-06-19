@@ -1,6 +1,5 @@
 package com.bosonit.block7crudvalidation.student.controller;
 
-import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosInputDTO;
 import com.bosonit.block7crudvalidation.student.application.StudentServiceImpl;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentInputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentOutputDTO;
@@ -9,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @Validated
+@EnableTransactionManagement
 @RequestMapping("/student")
 public class StudentController {
     @Autowired
@@ -23,20 +25,32 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentOutputDTO> addStudent(@RequestBody @Valid StudentInputDTO studentInputDTO) {
+
         return ResponseEntity.status(HttpStatus.CREATED).body(studentService.addStudent(studentInputDTO));
     }
 
-    @PostMapping("/estudios/{id}") //FIXME: POST o PUT?
+    @Transactional
+    @PutMapping("/estudiosAdd/{id}")
     public ResponseEntity<StudentOutputDTO> addEstudiosToStudent(@PathVariable Integer id, @RequestBody List<Integer> lEstudiosId) {
+        StudentOutputDTO studentOutputDTO = studentService.addEstudiosToStudent(id, lEstudiosId);
+
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(studentService.addEstudiosToStudent(id, lEstudiosId));
+                .body(studentOutputDTO);
+    }
+
+    @PutMapping("/estudiosDelete/{id}")
+    public ResponseEntity<StudentOutputDTO> deleteEstudiosToStudent(@PathVariable Integer id, @RequestBody List<Integer> lEstudiosId) {
+        StudentOutputDTO studentOutputDTO = studentService.deleteEstudiosToStudent(id, lEstudiosId);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(studentOutputDTO);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getStudent(@PathVariable int id, @RequestParam(defaultValue = "simple") String outputType) throws Exception {
         if (outputType.equals("simple")) {
-            StudentSimpleOutputDTO studentSimpleOutputDTO = studentService.getSimpleStudent(id);
-            return ResponseEntity.status(HttpStatus.OK).body(studentService.getSimpleStudent(id));
+            StudentSimpleOutputDTO e  = studentService.getSimpleStudent(id);
+            return ResponseEntity.status(HttpStatus.OK).body(e);
         }else if (outputType.equals("full"))
             return ResponseEntity.status(HttpStatus.OK).body(studentService.getStudent(id));
         else

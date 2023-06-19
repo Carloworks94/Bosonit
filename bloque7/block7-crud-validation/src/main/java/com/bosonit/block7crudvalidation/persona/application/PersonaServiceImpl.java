@@ -11,7 +11,9 @@ import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
 import com.bosonit.block7crudvalidation.student.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,6 +49,9 @@ public class PersonaServiceImpl implements PersonaService {
             throw new UnprocessableEntityException("La actividad no puede ser nulo");
         if (personaInputDTO.getCreatedDate() == null)
             throw new UnprocessableEntityException("La fecha de creacion no puede ser nulo");
+
+        if (IPersonaRepository.existsByCompanyEmail(personaInputDTO.getCompanyEmail()))
+            throw new UnprocessableEntityException("Email repetido");
 
         return IPersonaRepository.save(new Persona(personaInputDTO)).personaToPersonaOutputDTO();
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface IStudentService {
     StudentOutputDTO addStudent(StudentInputDTO studentInputDTO);
 
-    StudentOutputDTO addEstudiosToStudent (int idEstudios, List<Integer> lEstudiosId);
+    StudentOutputDTO addEstudiosToStudent (int idEstudent, List<Integer> lEstudiosId);
     //StudentOutputDTO addPersonaToStudent(Persona persona) throws Exception;
 
     StudentOutputDTO getStudent (int id) throws Exception;
@@ -20,4 +20,6 @@ public interface IStudentService {
     StudentOutputDTO updateStudent (int id, StudentInputDTO studentInputDTO) throws Exception;
 
     StudentOutputDTO deleteStudent (int id) throws Exception;
+
+    StudentOutputDTO deleteEstudiosToStudent (int idEstudent, List<Integer> lEstudiosId);
 }

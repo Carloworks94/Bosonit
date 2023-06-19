@@ -5,10 +5,13 @@ import com.bosonit.block7crudvalidation.persona.application.PersonaServiceImpl;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.mapper.IPersonaMapper;
+import jakarta.validation.Valid;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -16,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/persona")
+@Validated
 public class PersonaController {
     //a su vez el servicio hace un autowired del repositorio JPA
     @Autowired
@@ -23,7 +27,7 @@ public class PersonaController {
     IPersonaMapper mapper = Mappers.getMapper(IPersonaMapper.class);
 
     @PostMapping
-    public ResponseEntity<PersonaOutputDTO> addPersona(@RequestBody PersonaInputDTO persona) throws Exception {
+    public ResponseEntity<PersonaOutputDTO> addPersona(@RequestBody @Valid PersonaInputDTO persona) throws Exception {
         URI location = URI.create("/persona");
         //return new ResponseEntity<>(personaService.addPersona(persona), HttpStatus.CREATED);
         //se puede hacer el return de ambas maneras

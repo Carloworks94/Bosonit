@@ -1,6 +1,9 @@
 package com.bosonit.block7crudvalidation.student.controller.dto;
 
+import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosOutputDTO;
+import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosSimpleOutputDTO;
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
+import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import jakarta.persistence.*;
@@ -15,11 +18,11 @@ import java.util.List;
 @NoArgsConstructor
 public class StudentOutputDTO {
     Integer id_student;
-    Persona persona;
+    PersonaOutputDTO persona;
     Integer num_hours_week;
     String coments;
-    Profesor profesor;
+    Integer id_profesor;
     String branch;
-    List<Estudios> estudios;
+    List<EstudiosSimpleOutputDTO> estudios;
 
 }

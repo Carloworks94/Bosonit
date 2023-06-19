@@ -6,11 +6,13 @@ import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorInputDTO;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
+import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorSimpleOutputDTO;
 import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
 import com.bosonit.block7crudvalidation.student.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,10 +41,21 @@ public class ProfesorServiceImpl implements IProfesorService{
         return profesorRepository.save(profesor).profesorToProfesorOutputDTO();
     }
 
+    @Transactional
     @Override
     public ProfesorOutputDTO getProfesor (int id){
-        return profesorRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("404 - El profesor no existe")).profesorToProfesorOutputDTO();
+        Profesor profesor = profesorRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("404 - El profesor no existe"));
+        //profesor.getStudents().size(); //Forzamos la inicializacion de la coleccion antes de que se cierre la sesión de Hibernate, si no da error
+        return profesor.profesorToProfesorOutputDTO();
+    }
+
+    @Override
+    public ProfesorSimpleOutputDTO getSimpleProfesor (int id){
+        Profesor profesor = profesorRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("404 - El profesor no existe"));
+        //profesor.getStudents().size(); //Forzamos la inicializacion de la coleccion antes de que se cierre la sesión de Hibernate, si no da error
+        return profesor.profesorToProfesorSimpleOutputDTO();
     }
 
     @Override

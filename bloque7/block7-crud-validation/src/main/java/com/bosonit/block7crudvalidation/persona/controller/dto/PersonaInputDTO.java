@@ -1,6 +1,8 @@
 package com.bosonit.block7crudvalidation.persona.controller.dto;
 
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,13 +10,14 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-
 @NoArgsConstructor
 public class PersonaInputDTO {
     String user;
     String password;
     String name;
     String surname;
+    //@Column(unique = true) FIXME: hacerlo unico pero en el Input, para que no se autogenere el ID de un objeto Persona fallido.
+    @Email(message = "El CompanyEmail no tiene formato correcto")
     String companyEmail;
     String personalEmail;
     String city;

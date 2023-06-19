@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -16,8 +17,6 @@ public class StudentSimpleOutputDTO {
     Integer id_student;
     Integer num_hours_week;
     String coments;
-    Profesor profesor;
+    Integer id_profesor;
     String branch;
-    List<Estudios> estudios;
-
 }
