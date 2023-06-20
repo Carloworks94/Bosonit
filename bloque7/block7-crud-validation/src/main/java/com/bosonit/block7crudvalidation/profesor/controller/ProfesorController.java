@@ -18,6 +18,7 @@ public class ProfesorController {
     @Autowired
     ProfesorServiceImpl profesorService;
 
+
     @PostMapping
     public ResponseEntity<ProfesorOutputDTO> addProfesor (@RequestBody ProfesorInputDTO profesorInputDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(profesorService.addProfesor(profesorInputDTO));

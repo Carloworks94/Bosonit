@@ -5,12 +5,12 @@ import com.bosonit.block7crudvalidation.persona.application.PersonaServiceImpl;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.mapper.IPersonaMapper;
+import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
 import jakarta.validation.Valid;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +24,9 @@ public class PersonaController {
     //a su vez el servicio hace un autowired del repositorio JPA
     @Autowired
     PersonaServiceImpl personaService;
+//    @Autowired
+//    PersonaFeign personaFeign;
+
     IPersonaMapper mapper = Mappers.getMapper(IPersonaMapper.class);
 
     @PostMapping
@@ -36,6 +39,18 @@ public class PersonaController {
         //tambien se puede agregar un location para indicar la direccion donde se ha creado el objeto Persona
         //return ResponseEntity.created(location).body(personaService.addPersona(persona));
     }
+
+    @GetMapping ("/profesor/{id}")
+    public ResponseEntity<ProfesorOutputDTO> getProfesor (@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(personaService.getProfesor(id).orElseThrow());
+    }
+
+
+//    @GetMapping("/profesor/{id}")
+//    public ResponseEntity<ProfesorOutputDTO> getProfesor(@PathVariable int id){
+//        ProfesorOutputDTO profesor = personaFeign.getProfesor(id);
+//        return ResponseEntity.status(HttpStatus.OK).body(profesor);
+//    }
 
     @GetMapping("{id}")
     public ResponseEntity<PersonaOutputDTO> getPersona(@PathVariable int id) throws Exception {

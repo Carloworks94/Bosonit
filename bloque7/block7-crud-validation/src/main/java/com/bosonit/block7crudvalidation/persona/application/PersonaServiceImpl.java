@@ -4,21 +4,28 @@ package com.bosonit.block7crudvalidation.persona.application;
 import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
+import com.bosonit.block7crudvalidation.persona.controller.feign.PersonaFeign;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.exceptions.UnprocessableEntityException;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
+import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
 import com.bosonit.block7crudvalidation.student.repository.IStudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class PersonaServiceImpl implements PersonaService {
     @Autowired
     IPersonaRepository IPersonaRepository;
@@ -26,6 +33,8 @@ public class PersonaServiceImpl implements PersonaService {
     IProfesorRepository profesorRepository;
     @Autowired
     IStudentRepository studentRepository;
+
+    private final PersonaFeign personaFeign;
 
     @Override
     public PersonaOutputDTO addPersona(PersonaInputDTO personaInputDTO) throws Exception {
@@ -66,6 +75,29 @@ public class PersonaServiceImpl implements PersonaService {
         //aqui podriamos utilizar por ejemplo stream() para transformar el flujo de datos objetos tipo PersonaOutputDTO y así no usar un mapper en el controlador. Ej:
         //IEstudiosRepository.findAllByNombre(nombre).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
         return IPersonaRepository.findAllByUserPersona(user);
+    }
+    @Override
+    public Optional<ProfesorOutputDTO> getProfesor(String id) {
+        try {
+            //Esta es la línea que hay que sustituir si queremos utilizar RestTemplate
+            ResponseEntity<ProfesorOutputDTO> responseEntity = ResponseEntity.of(
+                    Optional.of(personaFeign.getProfesor(id)));
+
+            if (responseEntity.getStatusCode() != HttpStatus.OK) {
+                String message = "The answer wasn't correct." +
+                        "\nHttpCode: " + responseEntity.getStatusCode();
+
+                throw new UnprocessableEntityException(message);
+            }
+
+            return Optional.of(Objects.requireNonNull(responseEntity.getBody()));
+
+        } catch (HttpClientErrorException hcee) {
+            throw new EntityNotFoundException(hcee.getMessage());
+
+        } catch (Exception e) {
+            throw new UnprocessableEntityException(e.getMessage());
+        }
     }
 
 /*    @Override

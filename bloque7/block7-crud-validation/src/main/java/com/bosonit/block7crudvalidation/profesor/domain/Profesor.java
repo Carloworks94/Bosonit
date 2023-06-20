@@ -5,11 +5,10 @@ import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorInputDTO
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorSimpleOutputDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
