@@ -1,0 +1,15 @@
+#version: "24.0.2"
+#services:
+#  mispringboot:
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    links:
+#      - server
+#  server:
+#    image: postgres:latest
+#    ports:
+#      - "3306:3306"
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
