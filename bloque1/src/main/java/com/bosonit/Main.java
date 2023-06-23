@@ -4,6 +4,7 @@ package com.bosonit;
 import com.sun.jdi.InvalidLineNumberException;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -58,10 +59,12 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        String ruta = "C:\\Users\\carlos.garrido\\IdeaProjects\\block1-process-file-and-streams\\Personas.csv";
+        String ruta = "bloque1/src/main/java/com/bosonit/utils/Personas.csv";
+
+        //EJERCICIO 1a
+        System.out.println("Apartado A)");
         List<Person> personas = conversionCSV(ruta);
         personas = filtraPersonas(personas);
-
         for (Person persona : personas) {
             System.out.println(persona.toString());
         }
