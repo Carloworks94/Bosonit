@@ -9,7 +9,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface IPersonaMapper {
     //Si hay algún campo que no coincida, hay que meterlo con @Mapping
-    @Mapping(target="user", source="userPersona")
-    PersonaOutputDTO personaToPersonaOutputDTO (Persona persona);
+    //FIXME: error al compilar el proyecto la primera vez, Solucion por el momento --> comentar esta linea, compilar, descomentar y compilar
+    @Mapping(target = "user", source = "userPersona")
+    PersonaOutputDTO personaToPersonaOutputDTO(Persona persona);
 
 }

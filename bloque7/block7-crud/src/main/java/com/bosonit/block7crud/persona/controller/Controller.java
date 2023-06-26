@@ -4,9 +4,9 @@ package com.bosonit.block7crud.persona.controller;
 import com.bosonit.block7crud.persona.application.PersonaServiceImpl;
 import com.bosonit.block7crud.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crud.persona.controller.dto.PersonaOutputDTO;
+import com.bosonit.block7crud.persona.controller.mapper.IPersonaMapper;
 import com.bosonit.block7crud.persona.domain.Persona;
 import com.bosonit.block7crud.persona.response.RespuestaPersona;
-import com.bosonit.block7crud.persona.controller.mapper.IPersonaMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +56,7 @@ public class Controller {
         List<Persona> listaP = new ArrayList<>();
         List<PersonaOutputDTO> listaPO = new ArrayList<>();
         listaP = personaService.getPersonas(nombre);
-        for (Persona p : listaP){
+        for (Persona p : listaP) {
             listaPO.add(mapper.personaToPersonaOutputDTO(p));  //FIXME: pasar este for a un metodo del mapper que te devuelva una lista de PersonaOutputDTO
         }
         return new ResponseEntity<>(listaPO, HttpStatus.OK);
@@ -95,8 +95,8 @@ public class Controller {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletePersona (@PathVariable int id){ //TODO: no muestra la persona borrada por el body
-        try{
+    public ResponseEntity<?> deletePersona(@PathVariable int id) { //TODO: no muestra la persona borrada por el body
+        try {
             //si en vez de devolver el codigo OK volvemos un 204 (NO CONTENT) no devuelve el objeto persona
             return ResponseEntity.status(HttpStatus.OK).body(personaService.deletePersona(id));
         } catch (Exception e) {

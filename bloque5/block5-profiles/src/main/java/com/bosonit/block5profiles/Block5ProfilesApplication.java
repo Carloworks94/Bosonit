@@ -11,14 +11,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @RequiredArgsConstructor
 public class Block5ProfilesApplication implements CommandLineRunner {
 
-	private final AppConfig appConfig;
+    private final AppConfig appConfig;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Block5ProfilesApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Block5ProfilesApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		log.info("My app name: {}", appConfig.getUrl());
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("My app name: {}", appConfig.getUrl());
+    }
 }

@@ -1,7 +1,6 @@
 package com.bosonit.block7crudvalidation.student.controller.dto;
 
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
-import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.student.domain.Student;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class StudentInputDTO {
     String branch;
     List<Estudios> estudios;
 
-    public Student studentInputDTOtoStudent (Student student){
+    public Student studentInputDTOtoStudent(Student student) {
         student.setNum_hours_week(this.num_hours_week);
         student.setComents(this.coments);
         student.setBranch(this.branch);

@@ -1,13 +1,13 @@
 package com.bosonit.block7crudvalidation.persona.application;
 
 
+import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
+import com.bosonit.block7crudvalidation.exceptions.UnprocessableEntityException;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.feign.PersonaFeign;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
-import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
-import com.bosonit.block7crudvalidation.exceptions.UnprocessableEntityException;
 import com.bosonit.block7crudvalidation.persona.repository.IPersonaRepository;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
@@ -40,9 +40,9 @@ public class PersonaServiceImpl implements PersonaService {
     public PersonaOutputDTO addPersona(PersonaInputDTO personaInputDTO) throws Exception {
         if (personaInputDTO.getUser() == null)
             throw new UnprocessableEntityException("Usuario no puede ser nulo");
-        if (personaInputDTO.getUser().length()>10)
+        if (personaInputDTO.getUser().length() > 10)
             throw new UnprocessableEntityException("Longitud de usuario no puede ser mayor a 10 caracteres");
-        if (personaInputDTO.getUser().length()<6)
+        if (personaInputDTO.getUser().length() < 6)
             throw new UnprocessableEntityException("Longitud de usuario no puede ser menor a 6 caracteres");
         if (personaInputDTO.getPassword() == null)
             throw new UnprocessableEntityException("Password no puede ser nulo");
@@ -76,6 +76,7 @@ public class PersonaServiceImpl implements PersonaService {
         //IEstudiosRepository.findAllByNombre(nombre).stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
         return IPersonaRepository.findAllByUserPersona(user);
     }
+
     @Override
     public Optional<ProfesorOutputDTO> getProfesor(String id) {
         try {
@@ -121,7 +122,7 @@ public class PersonaServiceImpl implements PersonaService {
     }*/
 
     @Override
-    public List<PersonaOutputDTO> getAllPersonas(){
+    public List<PersonaOutputDTO> getAllPersonas() {
         return IPersonaRepository.findAll().stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
     }
 

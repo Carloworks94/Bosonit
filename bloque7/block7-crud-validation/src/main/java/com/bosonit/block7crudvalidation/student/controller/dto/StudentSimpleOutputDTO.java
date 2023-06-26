@@ -1,14 +1,8 @@
 package com.bosonit.block7crudvalidation.student.controller.dto;
 
-import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
-import com.bosonit.block7crudvalidation.persona.domain.Persona;
-import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.List;
 
 @Data
 @AllArgsConstructor

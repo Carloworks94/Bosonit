@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Block6ControladoresApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Block6ControladoresApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Block6ControladoresApplication.class, args);
+    }
 
 }

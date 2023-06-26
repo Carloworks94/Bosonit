@@ -1,15 +1,16 @@
 package com.bosonit.block7crudvalidation.exceptions.controller;
 
-import com.bosonit.block7crudvalidation.exceptions.UnprocessableEntityException;
 import com.bosonit.block7crudvalidation.exceptions.CustomError;
 import com.bosonit.block7crudvalidation.exceptions.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.exceptions.IllegalArgumentException;
+import com.bosonit.block7crudvalidation.exceptions.UnprocessableEntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,17 +19,17 @@ import java.util.Map;
 public class ExceptionController {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<CustomError> handleEntityNotFoundException(EntityNotFoundException exception){
+    public ResponseEntity<CustomError> handleEntityNotFoundException(EntityNotFoundException exception) {
         return new ResponseEntity<>(exception.getError(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UnprocessableEntityException.class)
-    public ResponseEntity<CustomError> handleUnprocessableEntityException(UnprocessableEntityException exception){
+    public ResponseEntity<CustomError> handleUnprocessableEntityException(UnprocessableEntityException exception) {
         return new ResponseEntity<>(exception.getError(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<CustomError> handleIllegalArgumentException(IllegalArgumentException exception){
+    public ResponseEntity<CustomError> handleIllegalArgumentException(IllegalArgumentException exception) {
         return new ResponseEntity<>(exception.getError(), HttpStatus.BAD_REQUEST);
     }
 

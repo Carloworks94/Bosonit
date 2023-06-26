@@ -15,10 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class ProfesorServiceImpl implements IProfesorService{
+public class ProfesorServiceImpl implements IProfesorService {
     @Autowired
     IProfesorRepository profesorRepository;
     @Autowired
@@ -27,12 +26,12 @@ public class ProfesorServiceImpl implements IProfesorService{
     IStudentRepository studentRepository;
 
     @Override
-    public ProfesorOutputDTO addProfesor (ProfesorInputDTO profesorInputDTO){
+    public ProfesorOutputDTO addProfesor(ProfesorInputDTO profesorInputDTO) {
         Persona persona = personaRepository.findById(profesorInputDTO.getIdPersona()).orElseThrow(
                 () -> new EntityNotFoundException("404 - La persona no existe")
         );
 
-        if (profesorRepository.findByPersona(persona) != null || studentRepository.findByPersona(persona) != null){
+        if (profesorRepository.findByPersona(persona) != null || studentRepository.findByPersona(persona) != null) {
             throw new IllegalArgumentException("400 - La persona ya está asignada a otro estudiante/profesor");
         }
 
@@ -43,7 +42,7 @@ public class ProfesorServiceImpl implements IProfesorService{
 
     @Transactional
     @Override
-    public ProfesorOutputDTO getProfesor (int id){
+    public ProfesorOutputDTO getProfesor(int id) {
         Profesor profesor = profesorRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("404 - El profesor no existe"));
         //profesor.getStudents().size(); //Forzamos la inicializacion de la coleccion antes de que se cierre la sesión de Hibernate, si no da error
@@ -51,7 +50,7 @@ public class ProfesorServiceImpl implements IProfesorService{
     }
 
     @Override
-    public ProfesorSimpleOutputDTO getSimpleProfesor (int id){
+    public ProfesorSimpleOutputDTO getSimpleProfesor(int id) {
         Profesor profesor = profesorRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("404 - El profesor no existe"));
         //profesor.getStudents().size(); //Forzamos la inicializacion de la coleccion antes de que se cierre la sesión de Hibernate, si no da error
@@ -59,14 +58,14 @@ public class ProfesorServiceImpl implements IProfesorService{
     }
 
     @Override
-    public List<ProfesorOutputDTO> getAllProfesor (){
+    public List<ProfesorOutputDTO> getAllProfesor() {
         return profesorRepository.findAll().stream().map(
                 profesor -> profesor.profesorToProfesorOutputDTO()
         ).toList();
     }
 
     @Override
-    public ProfesorOutputDTO updateProfesor (int id, ProfesorInputDTO profesorInputDTO){
+    public ProfesorOutputDTO updateProfesor(int id, ProfesorInputDTO profesorInputDTO) {
         Profesor profesorAux = profesorRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("404 - El profesor con ese id no existe")
         );
@@ -76,7 +75,7 @@ public class ProfesorServiceImpl implements IProfesorService{
         );
 
         if ((profesorRepository.findByPersona(persona) != null || studentRepository.findByPersona(persona) != null)
-        && profesorAux.getPersona().getId()!=profesorInputDTO.getIdPersona()){
+                && profesorAux.getPersona().getId() != profesorInputDTO.getIdPersona()) {
             throw new IllegalArgumentException("400 - La persona ya está asignada a otro estudiante/profesor");
         }
 
@@ -87,7 +86,7 @@ public class ProfesorServiceImpl implements IProfesorService{
     }
 
     @Override
-    public ProfesorOutputDTO deleteProfesor (int id){
+    public ProfesorOutputDTO deleteProfesor(int id) {
         Profesor profesor = profesorRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("404 - El profesor con ese id no existe")
         );

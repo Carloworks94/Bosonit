@@ -10,7 +10,8 @@ import java.util.List;
 public interface IPersonaRepository extends JpaRepository<Persona, Integer> {
     List<Persona> findAllByUserPersona(String user);
 
-    boolean existsByCompanyEmail (String companyEmail);
+    boolean existsByCompanyEmail(String companyEmail);
+
     @Query(value = "SELECT COUNT(*) FROM Persona")
     int getTotal();
 }

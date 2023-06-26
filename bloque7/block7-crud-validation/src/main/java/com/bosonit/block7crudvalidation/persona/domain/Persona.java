@@ -2,14 +2,17 @@ package com.bosonit.block7crudvalidation.persona.domain;
 
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
 
-;import java.util.Date;
+import java.util.Date;
+
+;
 
 @Entity
 @Data
@@ -43,7 +46,7 @@ public class Persona {
     Date terminationDate;
 
 
-    public Persona (PersonaInputDTO personaInputDTO){
+    public Persona(PersonaInputDTO personaInputDTO) {
         this.userPersona = personaInputDTO.getUser();
         this.password = personaInputDTO.getPassword();
         this.name = personaInputDTO.getName();
@@ -57,8 +60,8 @@ public class Persona {
         this.terminationDate = personaInputDTO.getTerminationDate();
     }
 
-    public PersonaOutputDTO personaToPersonaOutputDTO(){
+    public PersonaOutputDTO personaToPersonaOutputDTO() {
         return new PersonaOutputDTO(this.id, this.userPersona, this.name, this.surname, this.companyEmail,
-        this.personalEmail, this.city, this.active, this.createdDate, this.imagenUrl, this.terminationDate);
+                this.personalEmail, this.city, this.active, this.createdDate, this.imagenUrl, this.terminationDate);
     }
 }

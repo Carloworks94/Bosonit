@@ -11,18 +11,22 @@ import java.util.Optional;
 
 public interface PersonaService {
     //CREATE
-    PersonaOutputDTO addPersona (PersonaInputDTO personaInputDTO) throws Exception;
+    PersonaOutputDTO addPersona(PersonaInputDTO personaInputDTO) throws Exception;
+
     Optional<ProfesorOutputDTO> getProfesor(String id);
+
     //READ
-    PersonaOutputDTO getPersona (int id) throws Exception;
+    PersonaOutputDTO getPersona(int id) throws Exception;
+
     List<Persona> getPersonas(String nombre);
+
     //Iterable<PersonaOutputDTO> getPersonas(int pageNumber, int pageSize);
     List<PersonaOutputDTO> getAllPersonas();
 
     //UPDATE
-    PersonaOutputDTO updatePersona (int id, PersonaInputDTO personaInputDTO) throws Exception;
+    PersonaOutputDTO updatePersona(int id, PersonaInputDTO personaInputDTO) throws Exception;
 
     //DELETE
-    PersonaOutputDTO deletePersona (int id) throws Exception;
+    PersonaOutputDTO deletePersona(int id) throws Exception;
 
 }

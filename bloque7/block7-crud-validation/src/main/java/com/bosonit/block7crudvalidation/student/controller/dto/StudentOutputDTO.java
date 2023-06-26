@@ -1,12 +1,7 @@
 package com.bosonit.block7crudvalidation.student.controller.dto;
 
-import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosOutputDTO;
 import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosSimpleOutputDTO;
-import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
 import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
-import com.bosonit.block7crudvalidation.persona.domain.Persona;
-import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

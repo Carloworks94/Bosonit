@@ -5,7 +5,10 @@ import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorInputDTO
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDTO;
 import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorSimpleOutputDTO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -33,16 +36,16 @@ public class Profesor {
     @Column(name = "rama")
     String branch;
 
-    public Profesor (ProfesorInputDTO profesorInputDTO){
+    public Profesor(ProfesorInputDTO profesorInputDTO) {
         this.coments = profesorInputDTO.getComents();
         this.branch = profesorInputDTO.getBranch();
     }
 
-    public ProfesorOutputDTO profesorToProfesorOutputDTO (){
+    public ProfesorOutputDTO profesorToProfesorOutputDTO() {
         return new ProfesorOutputDTO(this.idProfesor, this.persona.personaToPersonaOutputDTO(), this.coments, this.branch);
     }
 
-    public ProfesorSimpleOutputDTO profesorToProfesorSimpleOutputDTO (){
+    public ProfesorSimpleOutputDTO profesorToProfesorSimpleOutputDTO() {
         return new ProfesorSimpleOutputDTO(this.idProfesor, this.coments, this.branch);
     }
 

@@ -1,8 +1,6 @@
 package com.bosonit.block7crudvalidation.estudios.controller.dto;
 
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
-import com.bosonit.block7crudvalidation.student.domain.Student;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ public class EstudiosInputDTO {
     Date initialDate;
     Date finishDate;
 
-    public Estudios estudiosInputDTOToEstudios (Estudios estudios){
+    public Estudios estudiosInputDTOToEstudios(Estudios estudios) {
         estudios.setAsignatura(this.asignatura);
         estudios.setComment(this.comment);
         estudios.setInitialDate(this.initialDate);

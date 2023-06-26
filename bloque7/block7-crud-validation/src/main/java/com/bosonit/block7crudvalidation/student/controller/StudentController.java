@@ -49,9 +49,9 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getStudent(@PathVariable int id, @RequestParam(defaultValue = "simple") String outputType) throws Exception {
         if (outputType.equals("simple")) {
-            StudentSimpleOutputDTO e  = studentService.getSimpleStudent(id);
+            StudentSimpleOutputDTO e = studentService.getSimpleStudent(id);
             return ResponseEntity.status(HttpStatus.OK).body(e);
-        }else if (outputType.equals("full"))
+        } else if (outputType.equals("full"))
             return ResponseEntity.status(HttpStatus.OK).body(studentService.getStudent(id));
         else
             return new ResponseEntity<>("Valor de parametro incorrecto", HttpStatus.BAD_REQUEST);

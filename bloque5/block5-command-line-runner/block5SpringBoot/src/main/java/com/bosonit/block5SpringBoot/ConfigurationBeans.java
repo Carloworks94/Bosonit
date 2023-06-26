@@ -9,7 +9,7 @@ public class ConfigurationBeans {
     }
 
     @Bean
-    Bean1 getBean1(){
+    Bean1 getBean1() {
         return new Bean1();
     }
 }

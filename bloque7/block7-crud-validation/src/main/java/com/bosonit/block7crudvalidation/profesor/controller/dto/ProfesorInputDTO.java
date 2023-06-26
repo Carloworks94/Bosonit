@@ -18,10 +18,10 @@ public class ProfesorInputDTO {
     String coments;
     String branch;
 
-    public Profesor profesorInputDTOtoProfesor(Profesor profesor){
+    public Profesor profesorInputDTOtoProfesor(Profesor profesor) {
         profesor.setComents(this.coments);
         profesor.setBranch(this.branch);
-        this.students=new ArrayList<>();
+        this.students = new ArrayList<>();
         return profesor;
     }
 

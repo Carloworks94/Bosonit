@@ -11,11 +11,9 @@ import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.block7crudvalidation.profesor.repository.IProfesorRepository;
 import com.bosonit.block7crudvalidation.student.domain.Student;
 import com.bosonit.block7crudvalidation.student.repository.IStudentRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +57,10 @@ public class EstudiosServiceImpl implements IEstudiosService {
     }
 
     @Override
-    public List<String> getAsignaturasStudent(int id){
+    public List<String> getAsignaturasStudent(int id) {
         Student student = studentRepository.findById(id).get();
         List<String> lAsignaturas = new ArrayList<>();
-        for (Estudios estudios : student.getEstudios()){
+        for (Estudios estudios : student.getEstudios()) {
             lAsignaturas.add(estudios.getAsignatura());
         }
         return lAsignaturas;

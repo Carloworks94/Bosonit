@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-public class AppConfig{
+public class AppConfig {
     @Value("${bd.url}")
     public String url;
 

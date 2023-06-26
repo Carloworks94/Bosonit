@@ -1,17 +1,16 @@
 package com.bosonit.block7crudvalidation.student.domain;
 
-import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosOutputDTO;
 import com.bosonit.block7crudvalidation.estudios.domain.Estudios;
-import com.bosonit.block7crudvalidation.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentInputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentOutputDTO;
 import com.bosonit.block7crudvalidation.student.controller.dto.StudentSimpleOutputDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -53,8 +52,9 @@ public class Student {
 
     public StudentOutputDTO studentToStudentOutputDTO() {
         return new StudentOutputDTO(this.id_student, this.persona.personaToPersonaOutputDTO(), this.num_hours_week, this.coments, this.profesor.getIdProfesor(),
-        this.branch, this.estudios.stream().map(estudios -> estudios.estudiosToEstudiosSimpleOutputDTO()).toList());
+                this.branch, this.estudios.stream().map(estudios -> estudios.estudiosToEstudiosSimpleOutputDTO()).toList());
     }
+
     public StudentSimpleOutputDTO studentToStudentSimpleOutputDTO() {
         return new StudentSimpleOutputDTO(this.id_student, this.num_hours_week, this.coments, this.profesor.getIdProfesor(),
                 this.branch);

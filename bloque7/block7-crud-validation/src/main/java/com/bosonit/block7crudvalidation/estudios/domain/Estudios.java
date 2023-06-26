@@ -4,16 +4,15 @@ import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosInputDTO
 import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosOutputDTO;
 import com.bosonit.block7crudvalidation.estudios.controller.dto.EstudiosSimpleOutputDTO;
 import com.bosonit.block7crudvalidation.profesor.domain.Profesor;
-import com.bosonit.block7crudvalidation.student.controller.dto.StudentSimpleOutputDTO;
 import com.bosonit.block7crudvalidation.student.domain.Student;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
@@ -61,8 +60,8 @@ public class Estudios {
                     this.asignatura, this.comment, this.initialDate, this.finishDate);
     }
 
-    public EstudiosSimpleOutputDTO estudiosToEstudiosSimpleOutputDTO(){
+    public EstudiosSimpleOutputDTO estudiosToEstudiosSimpleOutputDTO() {
         return new EstudiosSimpleOutputDTO(this.idStudy, this.asignatura,
-                    this.comment, this.initialDate, this.finishDate);
+                this.comment, this.initialDate, this.finishDate);
     }
 }

@@ -8,14 +8,16 @@ import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorSimpleOu
 import java.util.List;
 
 public interface IProfesorService {
-    ProfesorOutputDTO addProfesor (ProfesorInputDTO profesorInputDTO);
+    ProfesorOutputDTO addProfesor(ProfesorInputDTO profesorInputDTO);
 
-    ProfesorOutputDTO getProfesor (int id);
-    ProfesorSimpleOutputDTO getSimpleProfesor (int id);
+    ProfesorOutputDTO getProfesor(int id);
+
+    ProfesorSimpleOutputDTO getSimpleProfesor(int id);
+
     List<ProfesorOutputDTO> getAllProfesor();
 
-    ProfesorOutputDTO updateProfesor (int id, ProfesorInputDTO profesorInputDTO);
+    ProfesorOutputDTO updateProfesor(int id, ProfesorInputDTO profesorInputDTO);
 
-    ProfesorOutputDTO deleteProfesor (int id);
+    ProfesorOutputDTO deleteProfesor(int id);
 
 }

@@ -131,7 +131,7 @@ public class StudentServiceImpl implements IStudentService {
             Estudios estudios = estudiosRepository.findById(id).orElseThrow(
                     () -> new EntityNotFoundException("404 - Estudios no encontrados")
             );
-            if(student.getEstudios().contains(estudios))
+            if (student.getEstudios().contains(estudios))
                 student.getEstudios().remove(estudios);
         }
 

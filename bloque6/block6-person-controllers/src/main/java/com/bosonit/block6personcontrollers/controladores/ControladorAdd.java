@@ -29,7 +29,7 @@ public class ControladorAdd {
     private Persona persona3;
 
     @GetMapping("/bean/{bean}")
-    public ResponseEntity<Persona> beanPersona (@PathVariable(value="bean") String nombre){
+    public ResponseEntity<Persona> beanPersona(@PathVariable(value = "bean") String nombre) {
         if (nombre.equals("bean1"))
             return new ResponseEntity<>(iService.creaPersona(nombre), HttpStatus.CREATED);
         else if (nombre.equals("bean2"))
@@ -41,15 +41,15 @@ public class ControladorAdd {
     @GetMapping("/addPersona")
     public ResponseEntity<Persona> datosPersona(@RequestHeader("name") String nombre,
                                                 @RequestHeader("poblacion") String poblacion,
-                                                @RequestHeader("edad") int edad){
-        Persona persona = iService.creaPersona(nombre,poblacion,edad);
-        return new ResponseEntity<>(persona, HttpStatus.CREATED );
+                                                @RequestHeader("edad") int edad) {
+        Persona persona = iService.creaPersona(nombre, poblacion, edad);
+        return new ResponseEntity<>(persona, HttpStatus.CREATED);
     }
 
     //en la URL tienen que estar los parametros ?nombre= & nHabitantes=
     @PostMapping("/addCiudad")
-    public ResponseEntity<Ciudad> nuevaCiudad (@RequestParam String nombre, @RequestParam(name="nHabitantes") int numeroHabitantes){
-        Ciudad ciudad = new Ciudad(nombre,numeroHabitantes);
+    public ResponseEntity<Ciudad> nuevaCiudad(@RequestParam String nombre, @RequestParam(name = "nHabitantes") int numeroHabitantes) {
+        Ciudad ciudad = new Ciudad(nombre, numeroHabitantes);
         iService.addCiudad(ciudad);
         return new ResponseEntity<>(ciudad, HttpStatus.CREATED);
     }

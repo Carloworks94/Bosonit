@@ -6,7 +6,6 @@ import com.bosonit.block7crud.persona.controller.dto.PersonaOutputDTO;
 import com.bosonit.block7crud.persona.domain.Persona;
 import com.bosonit.block7crud.persona.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class PersonaServiceImpl implements PersonaService {
     }*/
 
     @Override
-    public List<PersonaOutputDTO> getAllPersonas(){
+    public List<PersonaOutputDTO> getAllPersonas() {
         return personaRepository.findAll().stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
     }
 

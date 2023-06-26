@@ -3,7 +3,6 @@ package com.bosonit.block6personcontrollers.entidades;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 
 @NoArgsConstructor
