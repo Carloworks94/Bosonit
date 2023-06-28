@@ -14,7 +14,7 @@ public class CustomError {
 
     String mensaje;
 
-    public CustomError(int httpCode, String mensaje){
+    public CustomError(int httpCode, String mensaje) {
         this.httpCode = httpCode;
         this.mensaje = mensaje;
         this.timeStamp = new Date();

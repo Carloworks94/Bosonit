@@ -44,7 +44,7 @@ public class FicheroController {
     }
 
     @GetMapping("/path")
-    public ResponseEntity<String> setPath (@RequestParam String ruta){
+    public ResponseEntity<String> setPath(@RequestParam String ruta) {
         ficheroService.setPath(ruta);
         return ResponseEntity.status(HttpStatus.OK).body("Ruta cambiada correctamente");
     }

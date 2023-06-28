@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 public interface IRutaArchivo {
 
-    String setPath (String nuevoPath);
+    String setPath(String nuevoPath);
 
     Path getPath();
 }

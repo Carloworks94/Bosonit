@@ -4,11 +4,11 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class IllegalArgumentException extends RuntimeException{
+public class IllegalArgumentException extends RuntimeException {
     CustomError error;
 
-    public IllegalArgumentException (String mensaje){
+    public IllegalArgumentException(String mensaje) {
         super(mensaje);
-        this.error= new CustomError(HttpStatus.BAD_REQUEST.value(), mensaje);
+        this.error = new CustomError(HttpStatus.BAD_REQUEST.value(), mensaje);
     }
 }

@@ -2,7 +2,10 @@ package com.bosonit.block11uploaddownloadfiles.fichero.domain;
 
 import com.bosonit.block11uploaddownloadfiles.fichero.controller.dto.FicheroOutputDTO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -24,7 +27,7 @@ public class Fichero {
 
     String categoria;
 
-    public FicheroOutputDTO ficheroToFicheroOutputDTO (){
+    public FicheroOutputDTO ficheroToFicheroOutputDTO() {
         FicheroOutputDTO ficheroOutputDTO = new FicheroOutputDTO();
         ficheroOutputDTO.setId(this.idFichero);
         ficheroOutputDTO.setNombre(this.nombre);

@@ -4,11 +4,11 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException {
     CustomError error;
 
-    public EntityNotFoundException(String mensaje){
+    public EntityNotFoundException(String mensaje) {
         super(mensaje);
-        this.error=new CustomError(HttpStatus.NOT_FOUND.value(), mensaje);
+        this.error = new CustomError(HttpStatus.NOT_FOUND.value(), mensaje);
     }
 }
