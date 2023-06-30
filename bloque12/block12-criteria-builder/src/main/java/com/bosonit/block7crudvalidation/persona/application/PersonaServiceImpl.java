@@ -19,9 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -101,25 +99,37 @@ public class PersonaServiceImpl implements PersonaService {
         }
     }
 
-/*    @Override
-    public Iterable<PersonaOutputDTO> getPersonas(int pageNumber, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize); //si ponemos por ejemplo la pag 0, y el numero max de elementos de la base de datos, nos mostraría todos los elementos
-//        List<PersonaOutputDTO> list;
-//        List<Persona> content = IEstudiosRepository.findAll(pageRequest).getContent();
-//        List<PersonaOutputDTO> result = new ArrayList<>();
-//        for (Persona persona : content) {
-//            PersonaOutputDTO personaToPersonaOutputDTO = persona.personaToPersonaOutputDTO();
-//            result.add(personaToPersonaOutputDTO);
-//        }
-//        list = result;
-//        return list;
-        //este codigo es lo mismo que lo comentado arriba
-        Iterable<PersonaOutputDTO> iterador = IEstudiosRepository.findAll(pageRequest)
-                .stream()
-                .map(persona -> persona.personaToPersonaOutputDTO())
-                .toList();
-        return iterador;
-    }*/
+    @Override
+    public Iterable<PersonaOutputDTO> getPersonasCustomQuery(String userPersona, String name, String surname, Date createdDate,
+                                                             String fechaOrder, String order, int pageNumber,
+                                                             int pageSize) {
+        HashMap<String, Object> data = new HashMap<>();
+        if (userPersona != null)
+            data.put("userPersona", userPersona);
+        if (name != null)
+            data.put("name", name);
+        if (surname != null)
+            data.put("surname", surname);
+        if (createdDate != null && fechaOrder != null) {
+            data.put("createdDate", createdDate);
+            if (!fechaOrder.equals("sup") && !fechaOrder.equals("inf") && !fechaOrder.equals("equal")) {
+                fechaOrder = "sup";
+                data.put("fechaOrder", fechaOrder);
+            } else
+                data.put("fechaOrder", fechaOrder);
+        } else if (createdDate != null && fechaOrder == null) {
+            data.put("createdDate", createdDate);
+            fechaOrder = "sup";
+            data.put("fechaOrder", fechaOrder);
+        }
+        if (order != null)
+            data.put("order", order);
+
+        List<Persona> lPersonas = IPersonaRepository.getPersonasCustomQuery(data, pageNumber, pageSize);
+
+        return lPersonas.stream().map(persona -> persona.personaToPersonaOutputDTO()).toList();
+
+    }
 
     @Override
     public List<PersonaOutputDTO> getAllPersonas() {

@@ -7,26 +7,26 @@ VALUES (1000, 'Usuario', '1234', 'Rodolfo', 'Surmano', 'bosonit@gmail.es', 'pers
 INSERT INTO Persona (id, user_persona, password, name, surname, company_email, personal_email, city, active,
                      created_date,
                      imagen_url, termination_date)
-VALUES (2000, 'Usuario', '1234', 'Rodolfo', 'Surmano', 'bosonit1@gmail.es', 'personal@gmail.es', 'Ciudad', false,
-        '1990-01-01', 'www.url.com', '2000-01-01');
+VALUES (2000, 'Suario', '1234', 'Rodolfo', 'Surmano', 'bosonit1@gmail.es', 'personal@gmail.es', 'Ciudad', false,
+        '1980-01-01', 'www.url.com', '2000-01-01');
 
 INSERT INTO Persona (id, user_persona, password, name, surname, company_email, personal_email, city, active,
                      created_date,
                      imagen_url, termination_date)
-VALUES (3000, 'Usuario', '1234', 'Rodolfo', 'Surmano', 'bosonit2@gmail.es', 'personal@gmail.es', 'Ciudad', false,
-        '1990-01-01', 'www.url.com', '2000-01-01');
+VALUES (3000, 'Susuario', '1234', 'Rodolfo', 'Surmano', 'bosonit2@gmail.es', 'personal@gmail.es', 'Ciudad', false,
+        '2000-01-01', 'www.url.com', '2000-01-01');
 
 INSERT INTO Persona (id, user_persona, password, name, surname, company_email, personal_email, city, active,
                      created_date,
                      imagen_url, termination_date)
-VALUES (4000, 'Usuario', '1234', 'Rodolfo', 'Surmano', 'bosonit3@gmail.es', 'personal@gmail.es', 'Ciudad', false,
-        '1990-01-01', 'www.url.com', '2000-01-01');
+VALUES (4000, 'Asusuario', '1234', 'Rodolfo', 'Surmano', 'bosonit3@gmail.es', 'personal@gmail.es', 'Ciudad', false,
+        '1970-01-01', 'www.url.com', '2000-01-01');
 
 INSERT INTO Persona (id, user_persona, password, name, surname, company_email, personal_email, city, active,
                      created_date,
                      imagen_url, termination_date)
-VALUES (5000, 'Usuario', '1234', 'Rodolfo', 'Surmano', 'bosonit4@gmail.es', 'personal@gmail.es', 'Ciudad', false,
-        '1990-01-01', 'www.url.com', '2000-01-01');
+VALUES (5000, 'Wusuario', '1234', 'Rodolfo', 'Surmano', 'bosonit4@gmail.es', 'personal@gmail.es', 'Ciudad', false,
+        '1960-01-01', 'www.url.com', '2000-01-01');
 
 
 INSERT INTO Profesor (id_profesor, id, comentarios, rama)

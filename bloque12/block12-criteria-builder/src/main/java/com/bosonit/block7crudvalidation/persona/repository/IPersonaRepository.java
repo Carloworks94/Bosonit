@@ -5,6 +5,7 @@ import com.bosonit.block7crudvalidation.persona.domain.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IPersonaRepository extends JpaRepository<Persona, Integer> {
@@ -12,6 +13,9 @@ public interface IPersonaRepository extends JpaRepository<Persona, Integer> {
 
     boolean existsByCompanyEmail(String companyEmail);
 
+
     @Query(value = "SELECT COUNT(*) FROM Persona")
     int getTotal();
+
+    public List<Persona> getPersonasCustomQuery(HashMap<String, Object> conditions, int pageNumber, int pageSize);
 }

@@ -9,12 +9,14 @@ import com.bosonit.block7crudvalidation.profesor.controller.dto.ProfesorOutputDT
 import jakarta.validation.Valid;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -40,8 +42,8 @@ public class PersonaController {
         //return ResponseEntity.created(location).body(personaService.addPersona(persona));
     }
 
-    @GetMapping ("/profesor/{id}")
-    public ResponseEntity<ProfesorOutputDTO> getProfesor (@PathVariable String id){
+    @GetMapping("/profesor/{id}")
+    public ResponseEntity<ProfesorOutputDTO> getProfesor(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(personaService.getProfesor(id).orElseThrow());
     }
 
@@ -77,11 +79,17 @@ public class PersonaController {
         return new ResponseEntity<>(listaP1, HttpStatus.OK);
     }
 
-//    @GetMapping("/pages")
-//    public Iterable<PersonaOutputDTO> getAllPersonas(@RequestParam(defaultValue = "0", required = false) int pageNumber,
-//                                                     @RequestParam(defaultValue = "4", required = false) int pageSize){
-//        return personaService.getPersonas(pageNumber,pageSize);
-//    }
+    @GetMapping("/query")
+    public ResponseEntity<Iterable<PersonaOutputDTO>> getPersonasCustomQuery(@RequestParam(required = false) String userPersona,
+                                                                             @RequestParam(required = false) String name,
+                                                                             @RequestParam(required = false) String surname,
+                                                                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdDate,
+                                                                             @RequestParam(required = false) String fechaOrder,
+                                                                             @RequestParam(required = false) String order,
+                                                                             @RequestParam int pageNumber,
+                                                                             @RequestParam(defaultValue = "10", required = false) int pageSize) {
+        return ResponseEntity.ok().body(personaService.getPersonasCustomQuery(userPersona, name, surname, createdDate, fechaOrder, order, pageNumber, pageSize));
+    }
 
 
     @PutMapping("{id}")
@@ -96,8 +104,8 @@ public class PersonaController {
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletePersona (@PathVariable int id){ //TODO: no muestra la persona borrada por el body
-        try{
+    public ResponseEntity<?> deletePersona(@PathVariable int id) { //TODO: no muestra la persona borrada por el body
+        try {
             //si en vez de devolver el codigo OK volvemos un 204 (NO CONTENT) no devuelve el objeto persona
             return ResponseEntity.status(HttpStatus.OK).body(personaService.deletePersona(id));
         } catch (Exception e) {
