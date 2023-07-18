@@ -6,7 +6,7 @@ Para la ejecución de este programa es necesario realizar estos pasos previos:
 
 	- A través de una Docker Image.
 	
- En nuestro caso hemos optado por usar el ZIP, ya que el Docker podría ocasionar problemas de con Sonar ya que tenemos nuestros proyecto en local.
+ 	En nuestro caso hemos optado por usar el ZIP, ya que el Docker podría ocasionar problemas de con Sonar ya que tenemos nuestros proyecto en local.
 
 * Una vez instalado, ejecutamos Sonar y ya podremos acceder a nuestro puerto http://localhost:9000/
 
