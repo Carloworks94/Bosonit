@@ -1,7 +1,7 @@
 # Guía Ejercicio Bloque 12 - MongoDB
 Para la ejecución de este programa es necesario realizar estos pasos previos:
 
-* Instalar [mongoDB] (https://www.mongodb.com/docs/v4.0/tutorial/install-mongodb-on-windows/)
+* Instalar [mongoDB](https://www.mongodb.com/docs/v4.0/tutorial/install-mongodb-on-windows/)
  
 * Crear directorio para guardar nuestra base de datos de mongoDB 
 
