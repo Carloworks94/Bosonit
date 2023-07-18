@@ -1,4 +1,4 @@
-# Guía Ejercicio Bloque 12 - MongoDB
+# Guía Ejercicio Bloque 13 - SonarQube
 Para la ejecución de este programa es necesario realizar estos pasos previos:
 
 * Descargar e instalar [SonarQube], se puede hacer de 2 maneras: 
