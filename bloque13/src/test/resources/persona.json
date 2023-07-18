@@ -1,0 +1,13 @@
+{
+  "user": "usuario",
+  "password": "1234",
+  "name": "nombre",
+  "surname": "surmano",
+  "companyEmail": "companyEmail@gmail.com",
+  "personalEmail": "personalEmail@gmail.com",
+  "city": "ciudad",
+  "active": true,
+  "createdDate": "1980-12-31T23:00:00.000+00:00",
+  "imagenUrl": "www.urlImagen.com",
+  "terminationDate": "1989-12-31T23:00:00.000+00:00"
+}

@@ -19,8 +19,6 @@ public class EstudiosController {
     @Autowired
     EstudiosServiceImpl estudiosService;
 
-    //TODO: capturar todas las excepciones lanzadas del servicio
-
     @PostMapping
     public ResponseEntity<EstudiosOutputDTO> addEstudios(@RequestBody EstudiosInputDTO estudiosInputDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(estudiosService.addEstudios(estudiosInputDTO));
